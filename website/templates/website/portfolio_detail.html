@@ -1,0 +1,65 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<article>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{{ project.get_category_display }} · {{ project.year }}</p>
+      <h1>{{ project.title }}</h1>
+      <p class="lead">{{ project.summary }}</p>
+      {% if project.sample_url %}
+        <a class="btn btn-primary" href="{{ project.sample_url }}" target="_blank" rel="noopener noreferrer">View sample project</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container detail-layout">
+      <div>
+        <img class="feature-image" src="{{ project.cover_src }}" alt="{{ project.title }}">
+        <p class="body-copy">{{ project.description }}</p>
+      </div>
+      <aside class="side-card">
+        {% if project.client %}<p><strong>Client</strong><br>{{ project.client }}</p>{% endif %}
+        {% if project.result %}<p><strong>Outcome</strong><br>{{ project.result }}</p>{% endif %}
+        {% if project.services.all %}
+          <p><strong>Services</strong></p>
+          <ul>
+            {% for service in project.services.all %}
+              <li><a href="{{ service.get_absolute_url }}">{{ service.title }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="side-actions">
+          {% if project.sample_url %}
+            <a class="btn btn-primary" href="{{ project.sample_url }}" target="_blank" rel="noopener noreferrer">View sample project</a>
+          {% endif %}
+          <a class="btn btn-ghost" href="{% url 'website:quote' %}">Start a similar project</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</article>
+
+{% if more_projects %}
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <h2>More work</h2>
+    </div>
+    <div class="project-grid">
+      {% for item in more_projects %}
+        <a class="project-card" href="{{ item.get_absolute_url }}">
+          <img src="{{ item.cover_src }}" alt="{{ item.title }}">
+          <div class="project-meta">
+            <span>{{ item.get_category_display }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.summary }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

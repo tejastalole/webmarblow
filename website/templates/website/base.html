@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page_title %}{{ page_title }} | {% endif %}{{ company.name }}</title>
+  <meta name="description" content="Webmarblow designs modern, responsive, result-driven websites that turn ideas into real business.">
+  <meta name="theme-color" content="#1a6dff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'website/img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="container header-inner">
+      <a class="brand" href="{% url 'website:home' %}">
+        {% include 'website/includes/logo.html' %}
+        <span class="brand-copy">
+          <span class="brand-name">webmarblow</span>
+          <span class="brand-tag">{{ company.tagline }}</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Menu</span>
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav>
+        <a href="{% url 'website:home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Home</a>
+        <a href="{% url 'website:services' %}" {% if 'service' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Services</a>
+        <a href="{% url 'website:portfolio' %}" {% if 'portfolio' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Portfolio</a>
+        <a href="{% url 'website:about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
+        <a href="{% url 'website:contact' %}" {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>Contact</a>
+        <a class="btn btn-primary btn-small" href="{% url 'website:quote' %}">Get Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    {% if messages %}
+      <div class="container messages-wrap">
+        {% for message in messages %}
+          <div class="flash flash-{{ message.tags }}" role="status">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand brand-light" href="{% url 'website:home' %}">
+          {% include 'website/includes/logo.html' %}
+          <span class="brand-copy">
+            <span class="brand-name">webmarblow</span>
+            <span class="brand-tag">{{ company.tagline }}</span>
+          </span>
+        </a>
+        <p class="footer-blurb">Your trusted web development partner. We design websites that turn ideas into real business.</p>
+        <p class="handwritten footer-hand">{{ company.closing }}</p>
+      </div>
+      <div>
+        <h2>Explore</h2>
+        <a href="{% url 'website:services' %}">Services</a>
+        <a href="{% url 'website:portfolio' %}">Portfolio</a>
+        <a href="{% url 'website:about' %}">About</a>
+        <a href="{% url 'website:quote' %}">Get a quote</a>
+      </div>
+      <div>
+        <h2>Talk to us</h2>
+        <a href="mailto:{{ company.email }}">{{ company.email }}</a>
+        <a href="https://{{ company.website }}">{{ company.website }}</a>
+        <p>{{ company.address }}</p>
+        <p>{{ company.hours }}</p>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <span>{{ company.website }}</span>
+        <span>{{ company.email }}</span>
+        <span>Your Trusted Web Development Partner</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'website/js/main.js' %}"></script>
+</body>
+</html>

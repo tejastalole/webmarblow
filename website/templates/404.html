@@ -1,0 +1,12 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">404</p>
+    <h1>This page is not on the map</h1>
+    <p class="lead">The link may be old, or the page may have moved. Head home or browse the work.</p>
+    <a class="btn btn-primary" href="{% url 'website:home' %}">Back to home</a>
+  </div>
+</section>
+{% endblock %}

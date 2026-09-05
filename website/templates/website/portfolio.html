@@ -1,0 +1,39 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Portfolio</p>
+    <h1>Work that looks good and works harder</h1>
+    <p class="lead">A sample of business, store, startup, and education websites we have shaped.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-row" role="navigation" aria-label="Project categories">
+      <a class="chip {% if not active_category %}is-active{% endif %}" href="{% url 'website:portfolio' %}">All</a>
+      {% for value, label in categories %}
+        <a class="chip {% if active_category == value %}is-active{% endif %}" href="?category={{ value }}">{{ label }}</a>
+      {% endfor %}
+    </div>
+
+    {% if projects %}
+      <div class="project-grid">
+        {% for project in projects %}
+          <a class="project-card" href="{{ project.get_absolute_url }}">
+            <img src="{{ project.cover_src }}" alt="{{ project.title }}">
+            <div class="project-meta">
+              <span>{{ project.get_category_display }} · {{ project.year }}</span>
+              <h2>{{ project.title }}</h2>
+              <p>{{ project.summary }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-note">No projects in this category yet. Browse all work or ask us about a similar brief.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

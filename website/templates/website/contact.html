@@ -1,0 +1,74 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Contact</p>
+    <h1>Tell us what you want to build</h1>
+    <p class="lead">Write to {{ company.email }} or send the form. We reply within one business day.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <form class="form-card" method="post" novalidate>
+      {% csrf_token %}
+      <div class="field-grid">
+        <label class="field">
+          <span>Name</span>
+          {{ form.name }}
+          {{ form.name.errors }}
+        </label>
+        <label class="field">
+          <span>Email</span>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </label>
+        <label class="field">
+          <span>Phone</span>
+          {{ form.phone }}
+          {{ form.phone.errors }}
+        </label>
+        <label class="field">
+          <span>Subject</span>
+          {{ form.subject }}
+          {{ form.subject.errors }}
+        </label>
+        <label class="field field-full">
+          <span>Message</span>
+          {{ form.message }}
+          {{ form.message.errors }}
+        </label>
+      </div>
+      <button class="btn btn-primary btn-lg" type="submit">Send message</button>
+    </form>
+
+    <aside class="side-card contact-aside">
+      <h2>Studio details</h2>
+      <p><strong>Email</strong><br><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+      <p><strong>Website</strong><br>{{ company.website }}</p>
+      <p><strong>Location</strong><br>{{ company.address }}</p>
+      <p><strong>Hours</strong><br>{{ company.hours }}</p>
+      <a class="btn btn-primary" href="{% url 'website:quote' %}">Prefer a full quote?</a>
+    </aside>
+  </div>
+</section>
+
+{% if faqs %}
+<section class="section section-tint">
+  <div class="container narrow">
+    <div class="section-head">
+      <h2>Quick answers</h2>
+    </div>
+    <div class="faq-list">
+      {% for faq in faqs %}
+        <details class="faq-item">
+          <summary>{{ faq.question }}</summary>
+          <p>{{ faq.answer }}</p>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

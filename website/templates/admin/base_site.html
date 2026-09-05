@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Webmarblow Admin{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="{% static 'website/img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'website/css/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div id="site-name" class="wm-brand">
+  <a href="{% url 'admin:index' %}">
+    {% include 'website/includes/logo.html' %}
+    <span class="wm-brand-copy">
+      <span class="wm-brand-name">webmarblow</span>
+      <span class="wm-brand-tag">Admin · Ideas · Websites · Growth</span>
+    </span>
+  </a>
+</div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+  <p class="wm-footer">Webmarblow Admin · Your Digital Growth Partner</p>
+{% endblock %}

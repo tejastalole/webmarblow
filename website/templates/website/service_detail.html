@@ -1,0 +1,74 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Service</p>
+    <h1>{{ service.title }}</h1>
+    <p class="lead">{{ service.short_description }}</p>
+    <a class="btn btn-primary" href="{% url 'website:quote' %}?service={{ service.slug }}">Get a quote for this</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail-layout">
+    <div>
+      <p class="body-copy">{{ service.description }}</p>
+      <ul class="check-list">
+        {% for feature in service.feature_list %}
+          <li>{{ feature }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <aside class="side-card">
+      <h2>Start this project</h2>
+      <p>Share a short brief and we will reply with scope, timeline, and a clear estimate.</p>
+      <div class="side-actions">
+        <a class="btn btn-primary" href="{% url 'website:quote' %}?service={{ service.slug }}">Request quote</a>
+        <a class="text-link" href="{% url 'website:contact' %}">Or send a message</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+{% if related_projects %}
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <h2>Projects using this service</h2>
+    </div>
+    <div class="project-grid">
+      {% for project in related_projects %}
+        <a class="project-card" href="{{ project.get_absolute_url }}">
+          <img src="{{ project.cover_src }}" alt="{{ project.title }}">
+          <div class="project-meta">
+            <span>{{ project.get_category_display }}</span>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.summary }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if related_services %}
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Other ways we can help</h2>
+    </div>
+    <div class="service-grid compact">
+      {% for item in related_services %}
+        <article class="service-card">
+          <span class="icon-bubble icon-{{ item.icon }}"></span>
+          <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+          <p>{{ item.short_description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

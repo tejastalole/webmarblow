@@ -1,0 +1,80 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">About Webmarblow</p>
+    <h1>Your digital growth partner</h1>
+    <p class="lead">We are a website studio for businesses that want a stronger online presence - not just a prettier page.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container about-grid">
+    <div>
+      <h2>Websites today, bigger tomorrows</h2>
+      <p class="body-copy">Webmarblow started with a simple belief: a website should turn an idea into real business. That means clear words, modern design, reliable code, and a path for customers to get in touch.</p>
+      <p class="body-copy">We work with founders, local businesses, and growing teams who need a site that looks trustworthy on a phone and still feels premium on a desktop.</p>
+    </div>
+    <div class="stat-stack">
+      <div class="stat-card"><strong>4</strong><span>core website services</span></div>
+      <div class="stat-card"><strong>3-6</strong><span>weeks for most launches</span></div>
+      <div class="stat-card"><strong>1</strong><span>clear quote before we begin</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">How we work</p>
+      <h2>Plan. Design. Develop. Grow.</h2>
+    </div>
+    <div class="step-grid">
+      {% for step in process_steps %}
+        <article class="step-card">
+          <span class="step-num">0{{ step.number }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">The studio</p>
+      <h2>People behind the pages</h2>
+    </div>
+    <div class="team-grid">
+      {% for member in team %}
+        <article class="team-card">
+          <span class="avatar">{{ member.initials }}</span>
+          <h3>{{ member.name }}</h3>
+          <p class="role">{{ member.role }}</p>
+          <p>{{ member.bio }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container narrow">
+    <div class="section-head">
+      <p class="eyebrow">Questions</p>
+      <h2>Things people ask before they start</h2>
+    </div>
+    <div class="faq-list">
+      {% for faq in faqs %}
+        <details class="faq-item">
+          <summary>{{ faq.question }}</summary>
+          <p>{{ faq.answer }}</p>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

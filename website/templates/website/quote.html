@@ -1,0 +1,72 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Get Quote</p>
+    <h1>Let's build your website</h1>
+    <p class="lead">Share a few details. We will send a scoped plan, timeline, and estimate - no vague packages.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <form class="form-card" method="post" novalidate>
+      {% csrf_token %}
+      <div class="field-grid">
+        <label class="field">
+          <span>Name</span>
+          {{ form.name }}
+          {{ form.name.errors }}
+        </label>
+        <label class="field">
+          <span>Email</span>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </label>
+        <label class="field">
+          <span>Phone</span>
+          {{ form.phone }}
+          {{ form.phone.errors }}
+        </label>
+        <label class="field">
+          <span>Company</span>
+          {{ form.company }}
+          {{ form.company.errors }}
+        </label>
+        <label class="field">
+          <span>Service</span>
+          {{ form.service }}
+          {{ form.service.errors }}
+        </label>
+        <label class="field">
+          <span>Budget</span>
+          {{ form.budget }}
+          {{ form.budget.errors }}
+        </label>
+        <label class="field">
+          <span>Timeline</span>
+          {{ form.timeline }}
+          {{ form.timeline.errors }}
+        </label>
+        <label class="field field-full">
+          <span>Project details</span>
+          {{ form.project_details }}
+          {{ form.project_details.errors }}
+        </label>
+      </div>
+      <button class="btn btn-primary btn-lg" type="submit">Request my quote</button>
+    </form>
+
+    <aside class="side-card">
+      <h2>What happens next</h2>
+      <ol class="plain-list">
+        <li>We read your brief the same day.</li>
+        <li>We reply with questions only if something is unclear.</li>
+        <li>You get a written scope, timeline, and price.</li>
+      </ol>
+      <p class="handwritten">A better online presence starts here!</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

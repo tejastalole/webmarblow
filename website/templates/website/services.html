@@ -1,0 +1,47 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">What we do</p>
+    <h1>Website solutions that help a business grow</h1>
+    <p class="lead">Design, development, mobile, and SEO - built as one system, not four disconnected tasks.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container service-grid">
+    {% for service in service_list %}
+      <article class="service-card">
+        <span class="icon-bubble icon-{{ service.icon }}"></span>
+        <h2><a href="{{ service.get_absolute_url }}">{{ service.title }}</a></h2>
+        <p>{{ service.short_description }}</p>
+        <ul>
+          {% for feature in service.feature_list %}
+            <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        <a class="text-link" href="{{ service.get_absolute_url }}">Learn more</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">The path</p>
+      <h2>A simple process from first call to launch</h2>
+    </div>
+    <div class="step-grid">
+      {% for step in process_steps %}
+        <article class="step-card">
+          <span class="step-num">0{{ step.number }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

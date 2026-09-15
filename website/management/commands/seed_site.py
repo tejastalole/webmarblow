@@ -146,6 +146,7 @@ class Command(BaseCommand):
                     'product cards that show origin and price at a glance, and a checkout path that works on a phone in one hand.'
                 ),
                 'cover_url': 'website/img/portfolio/harvest-basket.jpg',
+                'sample_url': 'https://harvest-basket-web-marblow.vercel.app/',
                 'result': 'Higher mobile add-to-cart rate',
                 'year': 2025,
                 'is_featured': True,

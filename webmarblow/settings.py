@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
+    'webmarblow',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,12 @@ COMPANY = {
     'address': 'Pune, Maharashtra, India',
     'hours': 'Mon - Sat, 10:00 AM - 7:00 PM IST',
 }
+
+
+# WhiteNoise configuration for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Authentication settings
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'product_list'
+LOGOUT_REDIRECT_URL = 'login'

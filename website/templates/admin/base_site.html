@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 {% load static %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Webmarblow Admin{% endblock %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | WebMarblow Admin{% endblock %}
 
 {% block extrahead %}
   {{ block.super }}
@@ -17,7 +17,7 @@
   <a href="{% url 'admin:index' %}">
     {% include 'website/includes/logo.html' %}
     <span class="wm-brand-copy">
-      <span class="wm-brand-name">webmarblow</span>
+      <span class="wm-brand-name">WebMarblow</span>
       <span class="wm-brand-tag">Admin · Ideas · Websites · Growth</span>
     </span>
   </a>
@@ -28,5 +28,5 @@
 {% endblock %}
 
 {% block footer %}
-  <p class="wm-footer">Webmarblow Admin · Your Digital Growth Partner</p>
+  <p class="wm-footer">WebMarblow Admin · Your Digital Growth Partner</p>
 {% endblock %}

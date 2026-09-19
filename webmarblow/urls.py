@@ -3,8 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-admin.site.site_header = 'Webmarblow Admin'
-admin.site.site_title = 'Webmarblow'
+admin.site.site_header = 'WebMarblow Admin'
+admin.site.site_title = 'WebMarblow'
 admin.site.index_title = 'Manage website content'
 
 urlpatterns = [

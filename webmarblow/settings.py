@@ -147,7 +147,7 @@ MAILERS = {
 }
 
 COMPANY = {
-    'name': 'Web Marblow',
+    'name': 'Webmarblow',
     'tagline': 'IDEAS · WEBSITES · GROWTH',
     'slogan': 'Your Digital Growth Partner',
     'closing': 'Websites Today, Bigger Tomorrows',

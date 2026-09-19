@@ -27,10 +27,12 @@ body {
   background: var(--white);
   font-family: "Plus Jakarta Sans", sans-serif;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -190,6 +192,7 @@ p {
   justify-content: space-between;
   min-height: 78px;
   gap: 20px;
+  position: relative;
 }
 
 .brand {
@@ -798,7 +801,43 @@ p {
   color: var(--muted);
 }
 
+/* Tablet */
+@media (max-width: 1100px) {
+  .icon-row,
+  .step-grid,
+  .project-grid,
+  .service-grid,
+  .service-grid.compact,
+  .quote-grid,
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .phone {
+    right: 0;
+    width: 130px;
+  }
+
+  .hero-grid,
+  .detail-layout,
+  .contact-grid,
+  .about-grid {
+    gap: 32px;
+  }
+}
+
+/* Mobile / small tablet */
 @media (max-width: 900px) {
+  .container,
+  .narrow {
+    width: min(1120px, calc(100% - 32px));
+  }
+
+  .hero,
+  .page-hero,
+  .section {
+    padding: 52px 0;
+  }
 
   .hero-grid,
   .detail-layout,
@@ -809,6 +848,7 @@ p {
   .project-grid,
   .quote-grid,
   .service-grid,
+  .service-grid.compact,
   .team-grid,
   .cta-inner,
   .footer-grid,
@@ -816,24 +856,77 @@ p {
     grid-template-columns: 1fr;
   }
 
+  .hero-grid,
+  .detail-layout,
+  .contact-grid,
+  .about-grid {
+    gap: 24px;
+    align-items: start;
+  }
+
+  .section-head.split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-inner {
+    min-height: 68px;
+  }
+
   .nav-toggle {
     display: block;
+    flex-shrink: 0;
+    z-index: 40;
   }
 
   .site-nav {
     display: none;
     position: absolute;
-    inset: 78px 20px auto;
-    background: white;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    background: #fff;
     border: 1px solid var(--line);
     border-radius: 18px;
-    padding: 16px;
+    padding: 12px;
     flex-direction: column;
     align-items: stretch;
+    gap: 4px;
+    box-shadow: var(--shadow);
+    z-index: 35;
+  }
+
+  .site-nav a {
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+
+  .site-nav a:hover,
+  .site-nav a[aria-current="page"] {
+    background: #eaf2ff;
+  }
+
+  .site-nav .btn {
+    width: 100%;
+    margin-top: 4px;
   }
 
   .site-nav.is-open {
     display: flex;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  .device-stage {
+    min-height: 0;
+    max-width: 100%;
+  }
+
+  .laptop {
+    max-width: 100%;
   }
 
   .phone {
@@ -842,5 +935,146 @@ p {
 
   .mini-features {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-actions,
+  .side-actions,
+  .cta-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn,
+  .side-actions .btn,
+  .cta-inner .btn,
+  .page-hero .btn,
+  .form-card .btn {
+    width: 100%;
+  }
+
+  .feature-image {
+    height: 240px;
+  }
+
+  .footer-bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .filter-row {
+    gap: 8px;
+  }
+
+  .lead,
+  .body-copy {
+    max-width: none;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+  .container,
+  .narrow {
+    width: calc(100% - 24px);
+  }
+
+  .hero,
+  .page-hero,
+  .section {
+    padding: 40px 0;
+  }
+
+  .page-hero {
+    padding-bottom: 24px;
+  }
+
+  .brand-tag {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .brand-mark svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-copy h1,
+  .page-hero h1 {
+    font-size: clamp(1.85rem, 8.5vw, 2.5rem);
+    word-break: break-word;
+  }
+
+  .lead,
+  .body-copy {
+    font-size: 0.98rem;
+  }
+
+  .handwritten {
+    font-size: 1.2rem;
+  }
+
+  .btn-lg {
+    padding: 14px 20px;
+  }
+
+  .icon-item,
+  .step-card,
+  .service-card,
+  .quote-card,
+  .team-card,
+  .form-card,
+  .side-card,
+  .stat-card {
+    padding: 16px;
+  }
+
+  .project-card img {
+    height: 170px;
+  }
+
+  .feature-image {
+    height: 190px;
+    border-radius: 16px;
+  }
+
+  .mini-features {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-band {
+    padding: 40px 0;
+  }
+
+  .footer-grid {
+    padding: 36px 0 20px;
+    gap: 20px;
+  }
+
+  .chip {
+    padding: 7px 12px;
+    font-size: 0.88rem;
+  }
+
+  .laptop-screen {
+    min-height: 220px;
+    padding: 12px;
+  }
+
+  .laptop-screen h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .icon-row {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-features {
+    font-size: 0.62rem;
   }
 }

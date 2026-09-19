@@ -837,7 +837,7 @@ p {
 @media (max-width: 900px) {
   .container,
   .narrow {
-    width: min(1120px, calc(100% - 32px));
+    width: calc(100% - 32px);
   }
 
   .hero,

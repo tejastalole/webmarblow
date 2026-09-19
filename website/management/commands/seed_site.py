@@ -164,6 +164,7 @@ class Command(BaseCommand):
                     'added a simple demo request flow, and designed a visual system that feels technical without being cold.'
                 ),
                 'cover_url': 'website/img/portfolio/pulse-labs.jpg',
+                'sample_url': 'https://pulse-labs-web-marblow.vercel.app/',
                 'result': 'Demo requests became the main lead source',
                 'year': 2026,
                 'is_featured': True,

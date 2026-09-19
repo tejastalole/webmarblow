@@ -16,7 +16,7 @@
       <p class="body-copy">{{ service.description }}</p>
       <ul class="check-list">
         {% for feature in service.feature_list %}
-          <li>{{ feature }}</li>
+        <li>{{ feature }}</li>
         {% endfor %}
       </ul>
     </div>
@@ -39,14 +39,14 @@
     </div>
     <div class="project-grid">
       {% for project in related_projects %}
-        <a class="project-card" href="{{ project.get_absolute_url }}">
-          <img src="{{ project.cover_src }}" alt="{{ project.title }}">
-          <div class="project-meta">
-            <span>{{ project.get_category_display }}</span>
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.summary }}</p>
-          </div>
-        </a>
+      <a class="project-card" href="{{ project.get_absolute_url }}">
+        <img src="{{ project.cover_src }}" alt="{{ project.title }}">
+        <div class="project-meta">
+          <span>{{ project.get_category_display }}</span>
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.summary }}</p>
+        </div>
+      </a>
       {% endfor %}
     </div>
   </div>
@@ -61,11 +61,11 @@
     </div>
     <div class="service-grid compact">
       {% for item in related_services %}
-        <article class="service-card">
-          <span class="icon-bubble icon-{{ item.icon }}"></span>
-          <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
-          <p>{{ item.short_description }}</p>
-        </article>
+      <article class="service-card">
+        <span class="icon-bubble icon-{{ item.icon }}"></span>
+        <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+        <p>{{ item.short_description }}</p>
+      </article>
       {% endfor %}
     </div>
   </div>

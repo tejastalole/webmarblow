@@ -11,6 +11,21 @@
   --white: #ffffff;
   --shadow: 0 20px 50px rgba(13, 40, 80, 0.12);
   --radius: 22px;
+
+  /* Fluid type + space that scale with screen width */
+  --fs-body: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  --fs-lead: clamp(1rem, 0.95rem + 0.35vw, 1.15rem);
+  --fs-h1: clamp(2rem, 1.35rem + 2.8vw, 4.2rem);
+  --fs-h2: clamp(1.45rem, 1.2rem + 1.2vw, 2.35rem);
+  --fs-h3: clamp(1.1rem, 1.02rem + 0.45vw, 1.35rem);
+  --fs-eyebrow: clamp(0.68rem, 0.64rem + 0.15vw, 0.78rem);
+  --fs-hand: clamp(1.15rem, 1.05rem + 0.55vw, 1.55rem);
+  --fs-nav: clamp(0.92rem, 0.88rem + 0.2vw, 1rem);
+  --space-section: clamp(2.5rem, 1.8rem + 3.5vw, 5rem);
+  --space-gap: clamp(1.1rem, 0.9rem + 1.2vw, 3rem);
+  --pad-card: clamp(1rem, 0.9rem + 0.6vw, 1.4rem);
+  --container-pad: clamp(1rem, 0.7rem + 1.5vw, 3rem);
+  --header-h: clamp(64px, 60px + 1vw, 78px);
 }
 
 * {
@@ -26,6 +41,7 @@ body {
   color: var(--ink);
   background: var(--white);
   font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: var(--fs-body);
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -47,6 +63,18 @@ h3 {
   line-height: 1.15;
   letter-spacing: -0.03em;
   margin: 0 0 0.6em;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
 }
 
 p {
@@ -79,18 +107,18 @@ p {
 }
 
 .container {
-  width: min(1320px, calc(100% - 48px));
+  width: min(1320px, calc(100% - (var(--container-pad) * 2)));
   margin: 0 auto;
 }
 
 .narrow {
-  width: min(820px, calc(100% - 48px));
+  width: min(820px, calc(100% - (var(--container-pad) * 2)));
 }
 
 .handwritten {
   font-family: Caveat, cursive;
   color: var(--orange);
-  font-size: 1.45rem;
+  font-size: var(--fs-hand);
   font-weight: 600;
   margin: 0;
 }
@@ -98,7 +126,7 @@ p {
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  font-size: 0.78rem;
+  font-size: var(--fs-eyebrow);
   font-weight: 700;
   color: var(--blue);
   margin-bottom: 10px;
@@ -107,7 +135,7 @@ p {
 .lead,
 .body-copy {
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: var(--fs-lead);
   max-width: 58ch;
 }
 
@@ -133,8 +161,9 @@ p {
   gap: 8px;
   border: 0;
   border-radius: 999px;
-  padding: 13px 22px;
+  padding: clamp(10px, 0.55rem + 0.4vw, 13px) clamp(16px, 0.9rem + 0.8vw, 22px);
   font: inherit;
+  font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1rem);
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
@@ -157,11 +186,13 @@ p {
 }
 
 .btn-lg {
-  padding: 16px 26px;
+  padding: clamp(12px, 0.7rem + 0.5vw, 16px) clamp(18px, 1rem + 1vw, 26px);
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
 }
 
 .btn-small {
   padding: 10px 16px;
+  font-size: 0.92rem;
 }
 
 .btn:hover {
@@ -190,7 +221,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 78px;
+  min-height: var(--header-h);
   gap: 20px;
   position: relative;
 }
@@ -199,24 +230,25 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 
 .brand-mark svg {
-  width: 42px;
-  height: 42px;
+  width: clamp(34px, 32px + 0.6vw, 42px);
+  height: clamp(34px, 32px + 0.6vw, 42px);
 }
 
 .brand-name {
   display: block;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
   color: var(--blue);
   letter-spacing: -0.04em;
 }
 
 .brand-tag {
   display: block;
-  font-size: 0.68rem;
+  font-size: clamp(0.58rem, 0.55rem + 0.12vw, 0.68rem);
   letter-spacing: 0.12em;
   color: var(--muted);
 }
@@ -224,8 +256,9 @@ p {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: clamp(14px, 0.8rem + 0.8vw, 22px);
   font-weight: 600;
+  font-size: var(--fs-nav);
 }
 
 .site-nav a[aria-current="page"] {
@@ -252,11 +285,11 @@ p {
 .hero,
 .page-hero,
 .section {
-  padding: 72px 0;
+  padding: var(--space-section) 0;
 }
 
 .hero {
-  min-height: calc(100vh - 78px);
+  min-height: calc(100vh - var(--header-h));
   display: flex;
   align-items: center;
   background:
@@ -265,7 +298,7 @@ p {
 }
 
 .hero > .container {
-  width: min(1320px, calc(100% - 48px));
+  width: min(1320px, calc(100% - (var(--container-pad) * 2)));
 }
 
 .hero-grid,
@@ -274,12 +307,13 @@ p {
 .about-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  gap: 48px;
+  gap: var(--space-gap);
   align-items: center;
 }
 
-.hero-copy h1 {
-  font-size: clamp(2.4rem, 5vw, 4.2rem);
+.hero-copy h1,
+.page-hero h1 {
+  font-size: var(--fs-h1);
 }
 
 .hero-actions {
@@ -439,7 +473,7 @@ p {
   background: white;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 22px;
+  padding: var(--pad-card);
 }
 
 .icon-item {
@@ -502,7 +536,7 @@ p {
 }
 
 .section-head {
-  margin-bottom: 28px;
+  margin-bottom: clamp(1.1rem, 0.9rem + 1vw, 1.75rem);
 }
 
 .section-head.split {
@@ -634,7 +668,7 @@ p {
 }
 
 .page-hero h1 {
-  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-size: var(--fs-h1);
 }
 
 .service-card ul,
@@ -824,26 +858,19 @@ p {
     right: 0;
     width: 130px;
   }
-
-  .hero-grid,
-  .detail-layout,
-  .contact-grid,
-  .about-grid {
-    gap: 32px;
-  }
 }
 
 /* Mobile / small tablet */
 @media (max-width: 900px) {
-  .container,
-  .narrow {
-    width: calc(100% - 32px);
+  :root {
+    --fs-h1: clamp(1.85rem, 1.2rem + 4.5vw, 2.7rem);
+    --fs-h2: clamp(1.3rem, 1.1rem + 1.4vw, 1.85rem);
+    --space-section: clamp(2.4rem, 2rem + 2vw, 3.4rem);
   }
 
-  .hero,
-  .page-hero,
-  .section {
-    padding: 52px 0;
+  .hero {
+    min-height: 0;
+    align-items: stretch;
   }
 
   .hero-grid,
@@ -867,7 +894,6 @@ p {
   .detail-layout,
   .contact-grid,
   .about-grid {
-    gap: 24px;
     align-items: start;
   }
 
@@ -875,10 +901,6 @@ p {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-  }
-
-  .header-inner {
-    min-height: 68px;
   }
 
   .nav-toggle {
@@ -960,7 +982,11 @@ p {
   }
 
   .feature-image {
-    height: 240px;
+    height: clamp(180px, 45vw, 260px);
+  }
+
+  .project-card img {
+    height: clamp(160px, 40vw, 210px);
   }
 
   .footer-bar-inner {
@@ -981,84 +1007,26 @@ p {
 
 /* Phone */
 @media (max-width: 600px) {
-  .container,
-  .narrow {
-    width: calc(100% - 24px);
-  }
-
-  .hero,
-  .page-hero,
-  .section {
-    padding: 40px 0;
-  }
-
-  .page-hero {
-    padding-bottom: 24px;
+  :root {
+    --fs-h1: clamp(1.7rem, 1.1rem + 5.5vw, 2.25rem);
+    --fs-lead: clamp(0.95rem, 0.9rem + 0.4vw, 1.05rem);
+    --pad-card: 1rem;
   }
 
   .brand-tag {
     display: none;
   }
 
-  .brand-name {
-    font-size: 1.1rem;
-  }
-
-  .brand-mark svg {
-    width: 34px;
-    height: 34px;
-  }
-
-  .hero-copy h1,
-  .page-hero h1 {
-    font-size: clamp(1.85rem, 8.5vw, 2.5rem);
-    word-break: break-word;
-  }
-
-  .lead,
-  .body-copy {
-    font-size: 0.98rem;
-  }
-
-  .handwritten {
-    font-size: 1.2rem;
-  }
-
-  .btn-lg {
-    padding: 14px 20px;
-  }
-
-  .icon-item,
-  .step-card,
-  .service-card,
-  .quote-card,
-  .team-card,
-  .form-card,
-  .side-card,
-  .stat-card {
-    padding: 16px;
-  }
-
-  .project-card img {
-    height: 170px;
-  }
-
-  .feature-image {
-    height: 190px;
-    border-radius: 16px;
+  .phone {
+    display: none;
   }
 
   .mini-features {
     grid-template-columns: 1fr;
   }
 
-  .cta-band {
-    padding: 40px 0;
-  }
-
-  .footer-grid {
-    padding: 36px 0 20px;
-    gap: 20px;
+  .feature-image {
+    border-radius: 16px;
   }
 
   .chip {
@@ -1067,12 +1035,12 @@ p {
   }
 
   .laptop-screen {
-    min-height: 220px;
+    min-height: 200px;
     padding: 12px;
   }
 
   .laptop-screen h2 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 }
 

@@ -79,12 +79,12 @@ p {
 }
 
 .container {
-  width: min(1120px, calc(100% - 40px));
+  width: min(1320px, calc(100% - 48px));
   margin: 0 auto;
 }
 
 .narrow {
-  width: min(760px, calc(100% - 40px));
+  width: min(820px, calc(100% - 48px));
 }
 
 .handwritten {
@@ -256,9 +256,16 @@ p {
 }
 
 .hero {
+  min-height: calc(100vh - 78px);
+  display: flex;
+  align-items: center;
   background:
     radial-gradient(circle at 85% 10%, rgba(255, 138, 43, 0.12), transparent 22%),
     linear-gradient(180deg, #f8fbff 0%, #ffffff 70%);
+}
+
+.hero > .container {
+  width: min(1320px, calc(100% - 48px));
 }
 
 .hero-grid,

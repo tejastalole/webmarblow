@@ -7,8 +7,8 @@
       <p class="eyebrow">{{ project.get_category_display }} · {{ project.year }}</p>
       <h1>{{ project.title }}</h1>
       <p class="lead">{{ project.summary }}</p>
-      {% if project.sample_url %}
-        <a class="btn btn-primary" href="{{ project.sample_url }}" target="_blank" rel="noopener noreferrer">View sample project</a>
+      {% if project.sample_link %}
+        <a class="btn btn-primary" href="{{ project.sample_link }}" target="_blank" rel="noopener noreferrer">View sample project</a>
       {% endif %}
     </div>
   </section>
@@ -31,8 +31,8 @@
           </ul>
         {% endif %}
         <div class="side-actions">
-          {% if project.sample_url %}
-            <a class="btn btn-primary" href="{{ project.sample_url }}" target="_blank" rel="noopener noreferrer">View sample project</a>
+          {% if project.sample_link %}
+            <a class="btn btn-primary" href="{{ project.sample_link }}" target="_blank" rel="noopener noreferrer">View sample project</a>
           {% endif %}
           <a class="btn btn-ghost" href="{% url 'website:quote' %}">Start a similar project</a>
         </div>

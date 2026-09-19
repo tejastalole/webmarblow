@@ -2,6 +2,15 @@ from django.db import models
 from django.templatetags.static import static
 from django.urls import reverse
 
+SAMPLE_URL_FALLBACKS = {
+    'northline-interiors': 'https://northline-interiors-web-marblow.vercel.app/',
+    'harvest-basket': 'https://harvest-basket-web-marblow.vercel.app/',
+    'pulse-labs': 'https://pulse-labs-web-marblow.vercel.app/',
+    'atelier-nova': 'https://atelier-nova-web-marblow.vercel.app/',
+    'brightpath-academy': 'https://brightpathacademy-web-marblow.vercel.app/',
+    'urban-roast-co': 'https://urban-roast-co-web-marblo.vercel.app/',
+}
+
 
 class Service(models.Model):
     ICON_CHOICES = [
@@ -72,6 +81,10 @@ class PortfolioProject(models.Model):
         if self.cover_url.startswith(('http://', 'https://', '/')):
             return self.cover_url
         return static(self.cover_url)
+
+    @property
+    def sample_link(self):
+        return (self.sample_url or '').strip() or SAMPLE_URL_FALLBACKS.get(self.slug, '')
 
 
 class Testimonial(models.Model):

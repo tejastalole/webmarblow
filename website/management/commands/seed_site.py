@@ -182,6 +182,7 @@ class Command(BaseCommand):
                     'and a contact path that does not interrupt the gallery. Performance work kept the visual quality without slow pages.'
                 ),
                 'cover_url': 'website/img/portfolio/atelier-nova.jpg',
+                'sample_url': 'https://atelier-nova-web-marblow.vercel.app/',
                 'result': 'Faster pages with larger images',
                 'year': 2025,
                 'is_featured': False,
@@ -199,6 +200,7 @@ class Command(BaseCommand):
                     'added faculty and outcome sections, and built an enquiry form that captures the right details for admissions.'
                 ),
                 'cover_url': 'website/img/portfolio/brightpath-academy.jpg',
+                'sample_url': 'https://brightpathacademy-web-marblow.vercel.app/',
                 'result': 'Clearer programme enquiries',
                 'year': 2025,
                 'is_featured': False,
@@ -216,6 +218,7 @@ class Command(BaseCommand):
                     'kept the brand warm, and made location and menu updates easy for the team.'
                 ),
                 'cover_url': 'website/img/portfolio/urban-roast-co.jpg',
+                'sample_url': 'https://urban-roast-co-web-marblo.vercel.app/',
                 'result': 'Wholesale enquiries from the website',
                 'year': 2024,
                 'is_featured': False,

@@ -1,21 +1,39 @@
+# Webmarblow
+
+Django website for Webmarblow, a studio that designs and builds websites for growing businesses.
+
+## Run locally
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_site
+python manage.py runserver
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+Admin: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)  
+Username: `root`  
+Password: `root`
+
 ## Email quotes to Gmail
 
 **Send message** and **Request my quote** email full details to `tejastalole7@gmail.com`.
 
-### One-time activation (required)
-1. Open Gmail for `tejastalole7@gmail.com`
-2. Check **Inbox** and **Spam** for an email from **FormSubmit**
-3. Click **Activate Form**
-4. Submit Contact or Quote again — the lead email will arrive
+### Works without SMTP (FormSubmit)
+1. Submit the Contact or Quote form once on the live site.
+2. Open `tejastalole7@gmail.com` and confirm the FormSubmit activation email (first time only).
+3. Later submissions will arrive in Gmail.
 
-### Stronger option (recommended): Resend
-1. Create a free key at [resend.com](https://resend.com)
-2. On Vercel → Settings → Environment Variables add:
-   - `RESEND_API_KEY` = your key
-   - `LEAD_NOTIFY_EMAIL` = `tejastalole7@gmail.com`
-3. Redeploy
+### Optional: Gmail SMTP (more reliable)
+On Vercel → Project → Settings → Environment Variables:
 
-### Or Gmail SMTP
 - `EMAIL_HOST_USER` = `tejastalole7@gmail.com`
 - `EMAIL_HOST_PASSWORD` = Gmail [App Password](https://myaccount.google.com/apppasswords)
-- Redeploy
+- `LEAD_NOTIFY_EMAIL` = `tejastalole7@gmail.com`
+
+Then redeploy.
+

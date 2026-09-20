@@ -1,6 +1,8 @@
 import html
 import logging
+from email.mime.image import MIMEImage
 from email.utils import formataddr
+from pathlib import Path
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -13,6 +15,11 @@ BRAND_MUTED = '#5c6d82'
 BRAND_PAPER = '#f4f7fb'
 BRAND_LINE = '#dce5f0'
 BRAND_ORANGE = '#ff8a2b'
+
+LOGO_PATH = (
+    Path(settings.BASE_DIR) / 'website' / 'static' / 'website' / 'img' / 'webmarblow-logo.png'
+)
+LOGO_CID = 'webmarblow-logo'
 
 
 def notify_owner(subject, text_body, html_body, reply_to=None):
@@ -31,6 +38,15 @@ def notify_owner(subject, text_body, html_body, reply_to=None):
         reply_to=[reply_to] if reply_to else None,
     )
     email.attach_alternative(html_body, 'text/html')
+    email.mixed_subtype = 'related'
+
+    if LOGO_PATH.exists():
+        with LOGO_PATH.open('rb') as logo_file:
+            logo = MIMEImage(logo_file.read(), _subtype='png')
+        logo.add_header('Content-ID', f'<{LOGO_CID}>')
+        logo.add_header('Content-Disposition', 'inline', filename='webmarblow-logo.png')
+        email.attach(logo)
+
     sent = email.send(fail_silently=False)
     logger.info('Lead email sent to %s (%s)', recipient, sent)
     return sent
@@ -95,19 +111,26 @@ def _wrap_html(eyebrow, title, intro, rows_html):
                style="max-width:560px;background:#ffffff;border-radius:18px;
                       overflow:hidden;border:1px solid {BRAND_LINE};">
           <tr>
-            <td style="background:linear-gradient(135deg,{BRAND_BLUE},{BRAND_NAVY});
-                       padding:28px 28px 24px;">
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;
+            <td align="left" style="padding:22px 28px 16px;background:#ffffff;
+                       border-bottom:1px solid {BRAND_LINE};">
+              <img src="cid:{LOGO_CID}" width="220" height="auto" alt="WebMarblow - Ideas, Websites, Growth"
+                   style="display:block;border:0;outline:none;text-decoration:none;
+                          max-width:220px;height:auto;">
+            </td>
+          </tr>
+          <tr>
+            <td style="background:{BRAND_BLUE};padding:22px 28px;">
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;
                           letter-spacing:0.14em;text-transform:uppercase;
-                          color:rgba(255,255,255,0.75);margin-bottom:8px;">
+                          color:rgba(255,255,255,0.8);margin-bottom:8px;">
                 {_esc(eyebrow)}
               </div>
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:24px;
-                          font-weight:700;color:#ffffff;line-height:1.25;">
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:22px;
+                          font-weight:700;color:#ffffff;line-height:1.3;">
                 {_esc(title)}
               </div>
               <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;
-                          color:rgba(255,255,255,0.85);margin-top:8px;">
+                          color:rgba(255,255,255,0.9);margin-top:8px;">
                 {_esc(intro)}
               </div>
             </td>
@@ -122,13 +145,11 @@ def _wrap_html(eyebrow, title, intro, rows_html):
           <tr>
             <td style="padding:18px 28px;background:{BRAND_PAPER};
                        border-top:1px solid {BRAND_LINE};">
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;
-                          color:{BRAND_MUTED};">
-                <strong style="color:{BRAND_NAVY};">WebMarblow</strong>
-                · Ideas · Websites · Growth
-              </div>
+              <img src="cid:{LOGO_CID}" width="140" height="auto" alt="WebMarblow"
+                   style="display:block;border:0;outline:none;margin-bottom:10px;
+                          max-width:140px;height:auto;">
               <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;
-                          color:{BRAND_ORANGE};margin-top:6px;">
+                          color:{BRAND_ORANGE};">
                 Reply to this email to contact the lead directly.
               </div>
             </td>

@@ -142,6 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Quote/contact leads are emailed here.
 LEAD_NOTIFY_EMAIL = os.environ.get('LEAD_NOTIFY_EMAIL', 'tejastalole7@gmail.com')
+SITE_URL = os.environ.get('SITE_URL', 'https://webmarblow.vercel.app')
 
 # Gmail SMTP: set EMAIL_HOST_USER + EMAIL_HOST_PASSWORD (App Password) on Vercel.
 EMAIL_BACKEND = os.environ.get(

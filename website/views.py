@@ -1,10 +1,13 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+import logging
 
 from website.email_utils import format_contact_email, format_quote_email, notify_owner
 from website.forms import ContactForm, QuoteForm
 from website.models import FAQ, PortfolioProject, ProcessStep, Service, TeamMember, Testimonial
+
+logger = logging.getLogger(__name__)
 
 
 def home(request):
@@ -87,8 +90,7 @@ def contact(request):
                 reply_to=inquiry.email,
             )
         except Exception:
-            # Lead stays in admin even if SMTP is not configured yet.
-            pass
+            logger.exception('Contact email failed')
         messages.success(
             request,
             'Thank you. We received your message and will reply within one business day.',
@@ -123,7 +125,7 @@ def quote(request):
                 reply_to=quote_request.email,
             )
         except Exception:
-            pass
+            logger.exception('Quote email failed')
         messages.success(
             request,
             'Your quote request is in. We will send a tailored plan and estimate shortly.',

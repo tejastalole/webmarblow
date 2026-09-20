@@ -1,8 +1,6 @@
 import html
 import logging
-from email.mime.image import MIMEImage
 from email.utils import formataddr
-from pathlib import Path
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -16,10 +14,10 @@ BRAND_PAPER = '#f4f7fb'
 BRAND_LINE = '#dce5f0'
 BRAND_ORANGE = '#ff8a2b'
 
-LOGO_PATH = (
-    Path(settings.BASE_DIR) / 'website' / 'static' / 'website' / 'img' / 'webmarblow-logo.png'
-)
-LOGO_CID = 'webmarblow-logo'
+
+def _logo_url():
+    site = getattr(settings, 'SITE_URL', 'https://webmarblow.vercel.app').rstrip('/')
+    return f'{site}/static/website/img/webmarblow-logo.png'
 
 
 def notify_owner(subject, text_body, html_body, reply_to=None):
@@ -38,15 +36,6 @@ def notify_owner(subject, text_body, html_body, reply_to=None):
         reply_to=[reply_to] if reply_to else None,
     )
     email.attach_alternative(html_body, 'text/html')
-    email.mixed_subtype = 'related'
-
-    if LOGO_PATH.exists():
-        with LOGO_PATH.open('rb') as logo_file:
-            logo = MIMEImage(logo_file.read(), _subtype='png')
-        logo.add_header('Content-ID', f'<{LOGO_CID}>')
-        logo.add_header('Content-Disposition', 'inline', filename='webmarblow-logo.png')
-        email.attach(logo)
-
     sent = email.send(fail_silently=False)
     logger.info('Lead email sent to %s (%s)', recipient, sent)
     return sent
@@ -99,6 +88,7 @@ def _message_block(label, text):
 
 
 def _wrap_html(eyebrow, title, intro, rows_html):
+    logo = _esc(_logo_url())
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
@@ -113,9 +103,10 @@ def _wrap_html(eyebrow, title, intro, rows_html):
           <tr>
             <td align="left" style="padding:22px 28px 16px;background:#ffffff;
                        border-bottom:1px solid {BRAND_LINE};">
-              <img src="cid:{LOGO_CID}" width="220" height="auto" alt="WebMarblow - Ideas, Websites, Growth"
-                   style="display:block;border:0;outline:none;text-decoration:none;
-                          max-width:220px;height:auto;">
+              <a href="https://webmarblow.vercel.app/" style="text-decoration:none;">
+                <img src="{logo}" width="220" alt="WebMarblow - Ideas, Websites, Growth"
+                     style="display:block;border:0;outline:none;max-width:220px;height:auto;">
+              </a>
             </td>
           </tr>
           <tr>
@@ -145,9 +136,11 @@ def _wrap_html(eyebrow, title, intro, rows_html):
           <tr>
             <td style="padding:18px 28px;background:{BRAND_PAPER};
                        border-top:1px solid {BRAND_LINE};">
-              <img src="cid:{LOGO_CID}" width="140" height="auto" alt="WebMarblow"
-                   style="display:block;border:0;outline:none;margin-bottom:10px;
-                          max-width:140px;height:auto;">
+              <a href="https://webmarblow.vercel.app/" style="text-decoration:none;">
+                <img src="{logo}" width="140" alt="WebMarblow"
+                     style="display:block;border:0;outline:none;margin-bottom:10px;
+                            max-width:140px;height:auto;">
+              </a>
               <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;
                           color:{BRAND_ORANGE};">
                 Reply to this email to contact the lead directly.

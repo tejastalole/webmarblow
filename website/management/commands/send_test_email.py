@@ -17,12 +17,20 @@ class Command(BaseCommand):
             return
 
         recipient = settings.LEAD_NOTIFY_EMAIL
+        text = (
+            'This is a test email from WebMarblow.\n'
+            'If you received this, SMTP is configured correctly.\n'
+        )
+        html_body = (
+            '<div style="font-family:Arial,Helvetica,sans-serif;padding:24px;">'
+            '<h2 style="color:#0b1830;">WebMarblow test email</h2>'
+            '<p style="color:#5c6d82;">SMTP is configured correctly.</p>'
+            '</div>'
+        )
         notify_owner(
             subject='WebMarblow test email',
-            body=(
-                'This is a test email from WebMarblow.\n'
-                'If you received this, SMTP is configured correctly.\n'
-            ),
+            text_body=text,
+            html_body=html_body,
             reply_to=settings.EMAIL_HOST_USER,
         )
         self.stdout.write(self.style.SUCCESS(f'Test email sent to {recipient}'))

@@ -79,9 +79,11 @@ def contact(request):
     if request.method == 'POST' and form.is_valid():
         inquiry = form.save()
         try:
+            text_body, html_body = format_contact_email(inquiry)
             notify_owner(
                 subject=f'WebMarblow contact: {inquiry.subject}',
-                body=format_contact_email(inquiry),
+                text_body=text_body,
+                html_body=html_body,
                 reply_to=inquiry.email,
             )
         except Exception:
@@ -113,9 +115,11 @@ def quote(request):
     if request.method == 'POST' and form.is_valid():
         quote_request = form.save()
         try:
+            text_body, html_body = format_quote_email(quote_request)
             notify_owner(
                 subject=f'WebMarblow quote request from {quote_request.name}',
-                body=format_quote_email(quote_request),
+                text_body=text_body,
+                html_body=html_body,
                 reply_to=quote_request.email,
             )
         except Exception:

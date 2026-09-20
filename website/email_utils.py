@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import urllib.error
 import urllib.request
 
@@ -11,22 +12,51 @@ logger = logging.getLogger(__name__)
 
 def notify_owner(subject, body, reply_to=None):
     """
-    Send lead/quote details to tejastalole7@gmail.com.
-    Uses Gmail SMTP when EMAIL_HOST_PASSWORD is set; otherwise FormSubmit.
+    Send lead details to tejastalole7@gmail.com.
+    Prefer Resend API, then Gmail SMTP. Browser FormSubmit is the no-config path.
     """
     recipient = getattr(settings, 'LEAD_NOTIFY_EMAIL', 'tejastalole7@gmail.com')
 
-    if getattr(settings, 'EMAIL_HOST_PASSWORD', ''):
-        try:
-            return _send_smtp(subject, body, recipient, reply_to)
-        except Exception:
-            logger.exception('SMTP email failed; trying FormSubmit fallback')
+    resend_key = os.environ.get('RESEND_API_KEY', '').strip()
+    if resend_key:
+        return _send_resend(resend_key, subject, body, recipient, reply_to)
 
+    if getattr(settings, 'EMAIL_HOST_PASSWORD', ''):
+        return _send_smtp(subject, body, recipient, reply_to)
+
+    logger.info('No RESEND_API_KEY / EMAIL_HOST_PASSWORD; relying on browser FormSubmit')
+    return False
+
+
+def _send_resend(api_key, subject, body, recipient, reply_to=None):
+    payload = {
+        'from': os.environ.get('RESEND_FROM', 'WebMarblow <onboarding@resend.dev>'),
+        'to': [recipient],
+        'subject': subject,
+        'text': body,
+    }
+    if reply_to:
+        payload['reply_to'] = reply_to
+
+    data = json.dumps(payload).encode('utf-8')
+    request = urllib.request.Request(
+        'https://api.resend.com/emails',
+        data=data,
+        headers={
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json',
+        },
+        method='POST',
+    )
     try:
-        return _send_formsubmit(subject, body, recipient, reply_to)
-    except Exception:
-        logger.exception('FormSubmit email failed for %s', recipient)
-        raise
+        with urllib.request.urlopen(request, timeout=20) as response:
+            result = json.loads(response.read().decode('utf-8'))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode('utf-8', errors='ignore')
+        raise RuntimeError(f'Resend HTTP {exc.code}: {detail}') from exc
+
+    logger.info('Resend mail queued for %s (%s)', recipient, result.get('id'))
+    return True
 
 
 def _send_smtp(subject, body, recipient, reply_to=None):
@@ -41,39 +71,6 @@ def _send_smtp(subject, body, recipient, reply_to=None):
     sent = email.send(fail_silently=False)
     logger.info('SMTP mail sent to %s (%s)', recipient, sent)
     return sent
-
-
-def _send_formsubmit(subject, body, recipient, reply_to=None):
-    payload = {
-        'name': 'WebMarblow Website',
-        'email': reply_to or recipient,
-        '_subject': subject,
-        '_template': 'table',
-        'message': body,
-    }
-    data = json.dumps(payload).encode('utf-8')
-    request = urllib.request.Request(
-        f'https://formsubmit.co/ajax/{recipient}',
-        data=data,
-        headers={
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'User-Agent': 'WebMarblow/1.0',
-        },
-        method='POST',
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=20) as response:
-            result = json.loads(response.read().decode('utf-8'))
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode('utf-8', errors='ignore')
-        raise RuntimeError(f'FormSubmit HTTP {exc.code}: {detail}') from exc
-
-    if str(result.get('success', '')).lower() not in {'true', '1'}:
-        raise RuntimeError(f'FormSubmit rejected mail: {result}')
-
-    logger.info('FormSubmit mail queued for %s', recipient)
-    return True
 
 
 def format_quote_email(quote_request):

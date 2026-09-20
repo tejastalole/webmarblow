@@ -78,27 +78,18 @@ def contact(request):
     form = ContactForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         inquiry = form.save()
-        mail_ok = False
         try:
             notify_owner(
                 subject=f'WebMarblow contact: {inquiry.subject}',
                 body=format_contact_email(inquiry),
                 reply_to=inquiry.email,
             )
-            mail_ok = True
         except Exception:
-            mail_ok = False
-
-        if mail_ok:
-            messages.success(
-                request,
-                'Thank you. We received your message and will reply within one business day.',
-            )
-        else:
-            messages.success(
-                request,
-                'Thank you. Your message was saved. If email delivery is still activating, check tejastalole7@gmail.com for a FormSubmit confirmation link.',
-            )
+            pass
+        messages.success(
+            request,
+            'Thank you. We received your message and will reply within one business day.',
+        )
         return redirect(reverse('website:contact'))
 
     context = {
@@ -120,27 +111,18 @@ def quote(request):
     form = QuoteForm(request.POST or None, initial=initial)
     if request.method == 'POST' and form.is_valid():
         quote_request = form.save()
-        mail_ok = False
         try:
             notify_owner(
                 subject=f'WebMarblow quote request from {quote_request.name}',
                 body=format_quote_email(quote_request),
                 reply_to=quote_request.email,
             )
-            mail_ok = True
         except Exception:
-            mail_ok = False
-
-        if mail_ok:
-            messages.success(
-                request,
-                'Your quote request is in. We will send a tailored plan and estimate shortly.',
-            )
-        else:
-            messages.success(
-                request,
-                'Your quote was saved. If email delivery is still activating, check tejastalole7@gmail.com for a FormSubmit confirmation link.',
-            )
+            pass
+        messages.success(
+            request,
+            'Your quote request is in. We will send a tailored plan and estimate shortly.',
+        )
         return redirect(reverse('website:quote'))
 
     context = {

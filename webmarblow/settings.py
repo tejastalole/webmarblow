@@ -140,18 +140,30 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+# Quote/contact leads are emailed here.
+LEAD_NOTIFY_EMAIL = os.environ.get('LEAD_NOTIFY_EMAIL', 'tejastalole7@gmail.com')
+
+# Gmail SMTP: set EMAIL_HOST_USER + EMAIL_HOST_PASSWORD (App Password) on Vercel.
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.smtp.EmailBackend'
+    if os.environ.get('EMAIL_HOST_PASSWORD')
+    else 'django.core.mail.backends.console.EmailBackend',
+)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'tejastalole7@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 COMPANY = {
     'name': 'WebMarblow',
     'tagline': 'IDEAS · WEBSITES · GROWTH',
     'slogan': 'Your Digital Growth Partner',
     'closing': 'Websites Today, Bigger Tomorrows',
-    'email': 'hello@webmarblow.com',
+    'email': 'tejastalole7@gmail.com',
     'website': 'www.webmarblow.com',
     'phone': '+91 98765 43210',
     'address': 'Pune, Maharashtra, India',

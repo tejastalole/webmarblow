@@ -1,8 +1,8 @@
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
+from website.email_utils import format_contact_email, format_quote_email, notify_owner
 from website.forms import ContactForm, QuoteForm
 from website.models import FAQ, PortfolioProject, ProcessStep, Service, TeamMember, Testimonial
 
@@ -78,13 +78,15 @@ def contact(request):
     form = ContactForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         inquiry = form.save()
-        send_mail(
-            subject=f'New enquiry from {inquiry.name}: {inquiry.subject}',
-            message=inquiry.message,
-            from_email=inquiry.email,
-            recipient_list=['hello@webmarblow.com'],
-            fail_silently=True,
-        )
+        try:
+            notify_owner(
+                subject=f'WebMarblow contact: {inquiry.subject}',
+                body=format_contact_email(inquiry),
+                reply_to=inquiry.email,
+            )
+        except Exception:
+            # Lead stays in admin even if SMTP is not configured yet.
+            pass
         messages.success(
             request,
             'Thank you. We received your message and will reply within one business day.',
@@ -110,13 +112,14 @@ def quote(request):
     form = QuoteForm(request.POST or None, initial=initial)
     if request.method == 'POST' and form.is_valid():
         quote_request = form.save()
-        send_mail(
-            subject=f'Quote request from {quote_request.name}',
-            message=quote_request.project_details,
-            from_email=quote_request.email,
-            recipient_list=['hello@webmarblow.com'],
-            fail_silently=True,
-        )
+        try:
+            notify_owner(
+                subject=f'WebMarblow quote request from {quote_request.name}',
+                body=format_quote_email(quote_request),
+                reply_to=quote_request.email,
+            )
+        except Exception:
+            pass
         messages.success(
             request,
             'Your quote request is in. We will send a tailored plan and estimate shortly.',
